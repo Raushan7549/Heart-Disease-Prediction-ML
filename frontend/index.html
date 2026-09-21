@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CardioAI | Heart Disease Prediction</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">♥</div>
+
+            <div>
+                <h2>CardioAI</h2>
+                <span>Prediction System</span>
+            </div>
+        </div>
+
+        <div class="sidebar-content">
+
+            <div class="status-card">
+                <div class="status-dot"></div>
+
+                <div>
+                    <strong>AI Model Online</strong>
+                    <small>Random Forest</small>
+                </div>
+            </div>
+
+            <div class="ecg">
+                <div class="ecg-line"></div>
+            </div>
+
+            <div class="sidebar-info">
+                <span>MODEL</span>
+                <strong>Tuned Random Forest</strong>
+            </div>
+
+            <div class="sidebar-info">
+                <span>ROC-AUC</span>
+                <strong>0.9334</strong>
+            </div>
+
+            <div class="sidebar-info">
+                <span>F1 SCORE</span>
+                <strong>0.9082</strong>
+            </div>
+
+        </div>
+
+        <div class="sidebar-footer">
+            <span>ML Healthcare Project</span>
+            <span>v1.0</span>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+
+            <div>
+                <span class="eyebrow">AI-POWERED HEALTH ANALYSIS</span>
+
+                <h1>
+                    Heart Disease
+                    <span>Prediction</span>
+                </h1>
+
+                <p>
+                    Enter patient information to generate a machine-learning
+                    prediction using the trained cardiovascular model.
+                </p>
+            </div>
+
+            <div class="model-badge">
+                <span class="pulse"></span>
+                Model Ready
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+        <section class="dashboard">
+
+            <!-- FORM CARD -->
+            <div class="panel form-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="section-number">01</span>
+
+                        <div>
+                            <h2>Patient Profile</h2>
+                            <p>Enter the patient's clinical parameters</p>
+                        </div>
+                    </div>
+
+                    <span class="required">
+                        * Required
+                    </span>
+
+                </div>
+
+
+                <form id="predictionForm">
+
+                    <!-- BASIC INFORMATION -->
+
+                    <div class="form-section">
+
+                        <h3>
+                            <span>01</span>
+                            Basic Information
+                        </h3>
+
+                        <div class="form-grid">
+
+                            <div class="field">
+                                <label for="age">
+                                    Age
+                                    <span>years</span>
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="age"
+                                    placeholder="55"
+                                    min="1"
+                                    max="120"
+                                    required
+                                >
+                            </div>
+
+
+                            <div class="field">
+                                <label for="sex">
+                                    Sex
+                                </label>
+
+                                <select id="sex" required>
+                                    <option value="">Select sex</option>
+                                    <option value="0">Female</option>
+                                    <option value="1">Male</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label>
+                                    Chest Pain Type
+                                    <span>Type of chest pain</span>
+                                </label>
+                                <select id="chest_pain_type" name="chest_pain_type" required>
+                                    <option value="">Select chest pain type</option>
+                                    <option value="1">Typical Angina</option>
+                                    <option value="2">Atypical Angina</option>
+                                    <option value="3">Non-Anginal Pain</option>
+                                    <option value="4">Asymptomatic</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CLINICAL MEASUREMENTS -->
+
+                    <div class="form-section">
+
+                        <h3>
+                            <span>02</span>
+                            Clinical Measurements
+                        </h3>
+
+                        <div class="form-grid">
+
+                            <div class="field">
+                                <label for="resting_bp_s">
+                                    Resting Blood Pressure
+                                    <span>mmHg</span>
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="resting_bp_s"
+                                    placeholder="140"
+                                    required
+                                >
+                            </div>
+
+
+                            <div class="field">
+                                <label for="cholesterol">
+                                    Cholesterol
+                                    <span>mg/dL</span>
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="cholesterol"
+                                    placeholder="250"
+                                    required
+                                >
+                            </div>
+
+
+                            <div class="field">
+                                <label for="max_heart_rate">
+                                    Maximum Heart Rate
+                                    <span>bpm</span>
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="max_heart_rate"
+                                    placeholder="150"
+                                    required
+                                >
+                            </div>
+
+
+                            <div class="field">
+                                <label for="oldpeak">
+                                    Oldpeak
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="oldpeak"
+                                    step="0.1"
+                                    placeholder="1.2"
+                                    required
+                                >
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- HEART INDICATORS -->
+
+                    <div class="form-section">
+
+                        <h3>
+                            <span>03</span>
+                            Heart Indicators
+                        </h3>
+
+                        <div class="form-grid">
+
+                            <div class="field">
+                                <label for="fasting_blood_sugar">
+                                    Fasting Blood Sugar
+                                    <span>Blood sugar level</span>
+                                </label>
+
+                                <select id="fasting_blood_sugar" required>
+                                    <option value="">Select blood sugar status</option>
+
+                                    <option value="0">
+                                        Normal — 120 mg/dL or below
+                                    </option>
+
+                                    <option value="1">
+                                        High — Above 120 mg/dL
+                                    </option>
+                                </select>
+                            </div>
+
+
+                            <div class="field">
+                                <label for="resting_ecg">
+                                    Resting ECG
+                                    <span>Heart electrical activity</span>
+                                </label>
+
+                                <select id="resting_ecg" required>
+                                    <option value="">Select ECG result</option>
+
+                                    <option value="0">
+                                        Normal
+                                    </option>
+
+                                    <option value="1">
+                                        ST-T Wave Abnormality
+                                    </option>
+
+                                    <option value="2">
+                                        Left Ventricular Hypertrophy
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="exercise_angina">
+                                    Exercise Angina
+                                    <span>Chest pain during exercise</span>
+                                </label>
+
+                                <select id="exercise_angina" required>
+                                    <option value="">Select</option>
+                                    <option value="0">No — No chest pain during exercise</option>
+                                    <option value="1">Yes — Chest pain during exercise</option>
+                                </select>
+                            </div>
+
+
+                            <div class="field">
+                                <label for="ST_slope">
+                                    ST Slope
+                                    <span>Shape of ST segment</span>
+                                </label>
+
+                                <select id="ST_slope" required>
+                                    <option value="">Select ST slope</option>
+                                    <option value="1">Upsloping — ST segment rises</option>
+                                    <option value="2">Flat — ST segment stays level</option>
+                                    <option value="3">Downsloping — ST segment falls</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        id="predictBtn"
+                    >
+                        <span class="button-icon">✦</span>
+                        Analyze Patient
+                        <span class="arrow">→</span>
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- RESULT PANEL -->
+
+            <div class="panel result-panel">
+
+                <div class="result-top">
+                    <span class="section-number">02</span>
+
+                    <div>
+                        <h2>Prediction Result</h2>
+                        <p>AI model output</p>
+                    </div>
+                </div>
+
+
+                <!-- DEFAULT STATE -->
+
+                <div
+                    id="emptyState"
+                    class="empty-state"
+                >
+
+                    <div class="scan-icon">
+                        ◉
+                    </div>
+
+                    <h3>Awaiting Analysis</h3>
+
+                    <p>
+                        Complete the patient profile and click
+                        <strong>Analyze Patient</strong>
+                        to generate a prediction.
+                    </p>
+
+                </div>
+
+
+                <!-- RESULT -->
+
+                <div
+                    id="resultContent"
+                    class="result-content"
+                >
+
+                    <div
+                        id="resultIcon"
+                        class="result-icon"
+                    >
+                        ✓
+                    </div>
+
+
+                    <div
+                        id="resultTitle"
+                        class="result-title"
+                    >
+                    </div>
+
+
+                    <p class="result-description">
+                        Model predicted probability
+                    </p>
+
+
+                    <div class="score-wrapper">
+
+                        <div class="score-header">
+
+                            <span>Prediction Probability</span>
+
+                            <strong id="probability">
+                                0%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="progress">
+
+                            <div
+                                id="progressBar"
+                                class="progress-bar"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="result-meta">
+
+                        <div>
+                            <span>MODEL</span>
+                            <strong>Random Forest</strong>
+                        </div>
+
+                        <div>
+                            <span>STATUS</span>
+                            <strong id="resultStatus">
+                                Complete
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="resetBtn"
+                        class="reset-btn"
+                        type="button"
+                    >
+                        ← New Analysis
+                    </button>
+
+                </div>
+
+
+                <!-- ERROR -->
+
+                <div
+                    id="errorBox"
+                    class="error"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- BOTTOM INFORMATION -->
+
+        <section class="info-row">
+
+            <div class="info-card">
+                <span>MODEL</span>
+                <strong>Tuned Random Forest</strong>
+            </div>
+
+            <div class="info-card">
+                <span>ROC-AUC</span>
+                <strong>0.9334</strong>
+            </div>
+
+            <div class="info-card">
+                <span>F1 SCORE</span>
+                <strong>0.9082</strong>
+            </div>
+
+            <div class="info-card">
+                <span>INPUT FEATURES</span>
+                <strong>11</strong>
+            </div>
+
+        </section>
+
+
+        <footer>
+
+            <span>
+                CardioAI • Machine Learning Healthcare Project
+            </span>
+
+            <span>
+                For educational and research purposes only.
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<script src="/static/script.js"></script>
+
+</body>
+</html>
